@@ -1,13 +1,9 @@
 let WebPlatformUUIDGenerator = {
-    $Utils: {
-        allocateString: function (str) {
-            return allocate(intArrayFromString(str), ALLOC_STACK);
-        },
-    },
     GetWebUUID: function () {
         try {
             if (window.crypto && window.crypto.randomUUID) {
-                return Utils.allocateString(window.crypto.randomUUID());
+                let str = window.crypto.randomUUID();
+                return stringToNewUTF8(str);
             }
         } catch (e) {
         }
@@ -15,5 +11,4 @@ let WebPlatformUUIDGenerator = {
     }
 }
 
-autoAddDeps(WebPlatformUUIDGenerator, '$Utils');
 mergeInto(LibraryManager.library, WebPlatformUUIDGenerator);
